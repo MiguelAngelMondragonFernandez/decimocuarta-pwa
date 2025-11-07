@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cámara PWA</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#333">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding-top: 20px;
+        }
+        h1 {
+            color: #ecf0f1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .button-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: #3498db;
+            color: white;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        button:hover:not(:disabled) {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        #cameraContainer {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            border: 2px solid #34495e;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #34495e;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        video {
+            width: 100%;
+            max-width: 480px;
+            height: auto;
+            background-color: black;
+            border: 2px solid #2c3e50;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        canvas {
+            display: none;
+        }
+        #photoGallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 20px;
+            padding: 0 10px;
+        }
+        #photoGallery img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        #photoGallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Cámara PWA</h1>
+
+    <div class="button-container">
+        <button id="openCamera">Abrir Cámara</button>
+        <button id="clearGallery">Limpiar Galería</button>
+    </div>
+
+    <div id="cameraContainer">
+        <video id="video" autoplay playsinline></video>
+        <div class="button-container">
+            <button id="takePhoto">Tomar Foto</button>
+            <button id="switchCamera">Cambiar Cámara</button>
+            <button id="closeCamera">Cerrar Cámara</button>
+        </div>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <div id="photoGallery"></div>
+
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => console.log('Service Worker registrado:', registration.scope))
+                    .catch(error => console.error('Fallo el registro del Service Worker:', error));
+            });
+        }
+    </script>
+</body>
+</html>
