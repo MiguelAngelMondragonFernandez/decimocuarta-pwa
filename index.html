@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cámara PWA</title>
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="./manifest.json">
     <meta name="theme-color" content="#333">
     <style>
         body {
@@ -114,11 +114,11 @@
 
     <div id="photoGallery"></div>
 
-    <script src="app.js"></script>
+    <script src="./app.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
+                navigator.serviceWorker.register('./sw.js')
                     .then(registration => console.log('Service Worker registrado:', registration.scope))
                     .catch(error => console.error('Fallo el registro del Service Worker:', error));
             });
